@@ -14,6 +14,7 @@ class BookGetter(object):
         self.shelf = shelf
         self.userid = userid
         # TODO: Add support for more than 100 books.
+        # TODO: Move init params to other functions. Implement params in requests.
         self.site_root = f'https://{self.library}.bibliocommons.com/collection/show/{self.userid}/library/{self.shelf}?page=1&view=small&display_quantity=100'
 
     def get_books(self):
