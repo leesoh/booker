@@ -31,6 +31,13 @@ class BookGetter(object):
                 book['title'] = 'N/A'
             try:
                 book['author'] = book_div.find('span', {'class': 'author'}).a.text
+                # Remove the year, if present
+                if len(book['author'].split(',')) == 3:
+                    print('Now splitting: ', book['author'])
+                    book_author = book['author'].split(',')
+                    del book_author[-1]
+                    book['author'] = ','.join(book_author)
+                    print('Author is now: ', book['author'])
             except AttributeError:
                 book['author'] = 'N/A'
             books.append(book)
@@ -46,4 +53,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
     bg = BookGetter(args.library, args.shelf, args.user)
     books = bg.get_books()
+    books.sort(key=lambda x: x['author'])
     pp.pprint(books)
